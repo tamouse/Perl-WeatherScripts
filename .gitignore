@@ -15,3 +15,6 @@
 *.tgz
 *.bz2
 *.bzip2
+
+# temporary files created by pod2html
+pod2*.tmp
