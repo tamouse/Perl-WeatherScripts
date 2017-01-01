@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XML-Schema-instance" version="1.2" xsi:noNamespaceSchemaLocation="http://aviationweather.gov/adds/schema/metar1_2.xsd">
+  <request_index>4896403</request_index>
+  <data_source name="metars" />
+  <request type="retrieve" />
+  <errors />
+  <warnings />
+  <time_taken_ms>3</time_taken_ms>
+  <data num_results="3">
+    <METAR>
+      <raw_text>KSTP 101535Z 12011KT 1 1/2SM -RA BR OVC008 08/07 A2970 RMK AO2 RAB1457 P0000</raw_text>
+      <station_id>KSTP</station_id>
+      <observation_time>2012-11-10T15:35:00Z</observation_time>
+      <latitude>44.93</latitude>
+      <longitude>-93.05</longitude>
+      <temp_c>8.0</temp_c>
+      <dewpoint_c>7.0</dewpoint_c>
+      <wind_dir_degrees>120</wind_dir_degrees>
+      <wind_speed_kt>11</wind_speed_kt>
+      <visibility_statute_mi>1.5</visibility_statute_mi>
+      <altim_in_hg>29.698818</altim_in_hg>
+      <quality_control_flags>
+        <auto_station>TRUE</auto_station>
+      </quality_control_flags>
+      <wx_string>-RA BR</wx_string>
+      <sky_condition sky_cover="OVC" cloud_base_ft_agl="800" />
+      <flight_category>IFR</flight_category>
+      <precip_in>0.0050</precip_in>
+      <metar_type>METAR</metar_type>
+      <elevation_m>219.0</elevation_m>
+    </METAR>
+    <METAR>
+      <raw_text>KSTP 101512Z 12013KT 1SM -RA BR OVC008 08/07 A2972 RMK AO2 RAB1457 P0000 RVRNO</raw_text>
+      <station_id>KSTP</station_id>
+      <observation_time>2012-11-10T15:12:00Z</observation_time>
+      <latitude>44.93</latitude>
+      <longitude>-93.05</longitude>
+      <temp_c>8.0</temp_c>
+      <dewpoint_c>7.0</dewpoint_c>
+      <wind_dir_degrees>120</wind_dir_degrees>
+      <wind_speed_kt>13</wind_speed_kt>
+      <visibility_statute_mi>1.0</visibility_statute_mi>
+      <altim_in_hg>29.719488</altim_in_hg>
+      <quality_control_flags>
+        <auto_station>TRUE</auto_station>
+      </quality_control_flags>
+      <wx_string>-RA BR</wx_string>
+      <sky_condition sky_cover="OVC" cloud_base_ft_agl="800" />
+      <flight_category>IFR</flight_category>
+      <precip_in>0.0050</precip_in>
+      <metar_type>METAR</metar_type>
+      <elevation_m>219.0</elevation_m>
+    </METAR>
+    <METAR>
+      <raw_text>KSTP 101501Z 12012KT 1 1/4SM -RA BR OVC008 08/07 A2972 RMK AO2 RAB1457 P0000</raw_text>
+      <station_id>KSTP</station_id>
+      <observation_time>2012-11-10T15:01:00Z</observation_time>
+      <latitude>44.93</latitude>
+      <longitude>-93.05</longitude>
+      <temp_c>8.0</temp_c>
+      <dewpoint_c>7.0</dewpoint_c>
+      <wind_dir_degrees>120</wind_dir_degrees>
+      <wind_speed_kt>12</wind_speed_kt>
+      <visibility_statute_mi>1.25</visibility_statute_mi>
+      <altim_in_hg>29.719488</altim_in_hg>
+      <quality_control_flags>
+        <auto_station>TRUE</auto_station>
+      </quality_control_flags>
+      <wx_string>-RA BR</wx_string>
+      <sky_condition sky_cover="OVC" cloud_base_ft_agl="800" />
+      <flight_category>IFR</flight_category>
+      <precip_in>0.0050</precip_in>
+      <metar_type>SPECI</metar_type>
+      <elevation_m>219.0</elevation_m>
+    </METAR>
+  </data>
+</response>
+

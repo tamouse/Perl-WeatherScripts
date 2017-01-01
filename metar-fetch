@@ -1,0 +1,2 @@
+curl -o current_metar.xml.gz 'http://www.aviationweather.gov/adds/dataserver_current/httpparam?datasource=metars&requesttype=retrieve&format=xml&compression=gzip&hoursBeforeNow=1.25&mostRecentForEachStation=true'
+curl -o kstp_metar.xml.gz 'http://www.aviationweather.gov/adds/dataserver_current/httpparam?datasource=metars&requesttype=retrieve&format=xml&compression=gzip&hoursBeforeNow=1&stationString=KSTP'

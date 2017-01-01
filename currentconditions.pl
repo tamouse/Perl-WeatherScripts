@@ -5,7 +5,7 @@
 #
 # Author: Tamara Temple <tamara@tamaratemple.com>
 # Created: 2011/11/19
-# Time-stamp: <2011-11-20 14:04:02 tamara>
+# Time-stamp: <2012-11-13 07:43:13 tamara>
 # Copyright (c) 2011 Tamara Temple Web Development
 # License: GPLv3
 #
@@ -22,56 +22,37 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # 
-# See [Google Weather API Wiki Article](http://wiki.tamaratemple.com/Main/GoogleWeatherApi)
-#
-
-
 
 use strict;
-use XML::Simple;
 use Data::Dumper;
-use Geo::IP 1.006;
 use URI::Escape;
+use XML::Simple;
 
-use constant DEFAULT_GEOIP_DATA => "/usr/share/GeoIP/GeoLiteCity.dat";
-use constant DEFAULT_DOMAIN_NAME => "tamnet.homeip.net";
-use constant DEFAULT_CITY => '';
+# TODO: Switch to Getopt::Auto!!
 
 use Getopt::Mixed::Help(
-    'd>domain-name:s domain' => "Domain name to use for weather information",
-    'g>geoip-data:s file' => "GeoIP City database file",
-    'c>city:s city' => "City to look up weather for"
+    's>station-name=s station' => "METAR station name (required)",
+    'd>debug:i number' => 'turn on debug information',
     );
 
-my $geoip_database = $opt_geoip_data;
-my $domain_name = $opt_domain_name;
-my $city = $opt_city;
-
-sub whatsmyip {
-    my $domain = shift @_;
-    my $cmd = 'dig +short @208.67.222.222 ' . $domain;
-    my $ip = `$cmd`; chomp($ip);
-    return $ip;
-}
-
+my $station = $opt_station_name;
+my $debug = $opt_debug;
 
 sub getweather {
-    my $city = shift @_;
-    my $url = "http://www.google.com/ig/api?weather=" . uri_escape($city);
+    my $station	= shift @_;
+    printf("DEBUG @ Line %s: var %s = %s\n", __LINE__, '$station', Dumper($station));
+    my $url	= "http://www.aviationweather.gov/adds/dataserver_current/httpparam?datasource=metars&requesttype=retrieve&format=xml&hoursBeforeNow=1&mostRecent=true&stationString=" . uri_escape($station);
     my $curlcmd = "curl -s $url";
     my $weather = `$curlcmd`;
-    my $w = XMLin($weather);
+    printf("DEBUG @ Line %s: var %s = %s\n", __LINE__, '$weather', Dumper($weather)) if $debug;    
+    my $w	= XMLin($weather);
+    printf("DEBUG @ Line %s: var %s = %s\n", __LINE__,  '$w', Dumper($w)) if $debug;
     return $w;
 }
 
-if ($city =~ /^\s*$/) {
-    my $geoip = Geo::IP->open($geoip_database);
-    my $geoip_rec = $geoip->record_by_addr(whatsmyip($domain_name));
-    die("error from geoip record retrieval: geoip_database=$geoip_database domain_name=$domain_name") if !defined($geoip_rec);
-    $city = $geoip_rec->city;
-}
+my $w = getweather($station);
 
-my $w = getweather($city);
+exit;
 
 
 printf("Current conditions for %s on %s:
@@ -97,75 +78,33 @@ currentconditions.pl
 
 =head1 SYNOPSIS
 
-currentconditions [-c <city>] [-d <domain>] [-g <geoip-database>]
+currentconditions [-D|Debug] stationID
 
 =head1 DECSRIPTION
 
-Retrieves the current weather conditions from the (undocumentted)
-Google Weather API service for the given city, or if omitted, will try
-to determine the current location based upon the network's external IP
-address.
+Uses the NOAA Aviation Weather service L<http://www.aviationweather.gov> to retrieve the METAR report for the given stationID.
 
 =head1 OPTIONS
 
 =over
 
 =item *
--d|--domain-name [<domain>]
-Domain name to use for weather information (defaults to tamnet.homeip.net)
+C<stationID> -- The station ID used to retrieve the METAR report. Station IDs can be found at L<http://www.aviationweather.gov/static/adds/metars/stations.txt>.
 
 =item *
--g|--geoip-data [<file>]
-GeoIP City database file (defaults to /usr/share/GeoIP/GeoLiteCity.dat)
-
-=item *
--c|--city [<city>]
-City to look up weather for (defaults to )
+C<-D|Debug> -- Turn on extra debugging information.
 
 =back
-
-=head1 FILES
-
-If no city is given, the external IP is used to look up the city based
-upon the GeoLiteCity data base avaialable from
-L<http://www.maxmind.com/app/ip-location>. The default location is
-C</usr/share/GeoIP/GeoLiteCity.dat>.
 
 =head1 EXAMPLES
 
 =over
 
-=item C<currentconditions.pl>
+=item C<currentconditions.pl> KSTP
 
 =back
 
-Shows current weather conditions for the city based up on the external
-IP address.
-
-=over
-
-=item C<currentconditions -c"St. Paul, MN">
-
-=item C<currentconditions --city="St. Paul, MN">
-
-=back
-
-Shows current weather conditoins for St. Paul, Minnesota.
-
-=over
-
-=item C<currentconditions -d"tamnet.homeip.net">
-
-=item C<currentconditions --domain-name=tamnet.homeip.net>
-
-=back
-
-Shows current weather conditions for the location of the domain
-tamnet.homeip.net.
-
-=head1 SEE ALSO
-
-L<http://wiki.tamaratemple.com/Main/GoogleWeatherApi>
+Shows current conditions for METAR station "KSTP" (St. Paul, Minnesota)
 
 =head1 AUTHOR
 
